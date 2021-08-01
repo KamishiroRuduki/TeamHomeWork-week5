@@ -15,7 +15,7 @@ namespace AccountNote.DBSource
                     {ex.ToString()}
                 ";
 
-            System.IO.File.AppendAllText("C:\\Users\\p4786\\C sharp\\WebFormTest\\Log.log", msg);
+            System.IO.File.AppendAllText("C:\\Users\\p4786\\C sharp\\TeamHomeWork-week5\\WebForm\\Log.log", msg);
 
             throw ex;
         }

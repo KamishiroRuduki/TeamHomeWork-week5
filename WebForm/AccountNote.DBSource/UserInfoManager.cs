@@ -11,44 +11,9 @@ namespace AccountNote.DBSource
 {
     public class UserInfoManager
     {
-        public static DataRow GETUserInfo(string id)
-        {
-            string connectionString = DBhelper.GetConnectionString();
-            string dbCommandString =
-                @"SELECT ID, Name 
-                  FROM User_info
-                  WHERE ID = @id
-                ";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand(dbCommandString, connection);
-                command.Parameters.AddWithValue("@id", id);//確保資料安全性
+        //,[UserLevel],[CreateDate]
 
-                try
-                {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    DataTable dt = new System.Data.DataTable();
-                    dt.Load(reader);
-                    reader.Close();
-
-                    if (dt.Rows.Count == 0)
-                        return null;
-
-                    DataRow dr = dt.Rows[0];
-                    return dr;
-
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                    return null;
-                }
-            }//自帶connection.close()
-        }
-
-        public static DataRow GETUserInoAccount(string account)
+        public static DataRow GETUserInfoAccount(string account)
         {
             string connectionString = DBhelper.GetConnectionString();
             string dbCommandString =
@@ -113,15 +78,15 @@ namespace AccountNote.DBSource
             string connectionString = DBhelper.GetConnectionString();
 
             string dbCommandString =
-            @"INSERT INTO Accounting
-                       (UserID,Caption,Amount,ActType,CreatDate,Body)
+            @"INSERT INTO AccountingNote
+                       (UserID,Caption,Amount,ActType,CreateDate,Body)
                     VALUES
                        (
                          @userID, 
                          @caption,
                          @amount,
                          @actType,
-                         @creatDate, 
+                         @createDate, 
                          @body);
              
                 ";
@@ -152,6 +117,25 @@ namespace AccountNote.DBSource
             }
 
             //}
+        }
+        public static DataRow GetUserCount()
+        {
+            string connStr = DBhelper.GetConnectionString();
+            string dbCommand =
+                $@"SELECT Count(*) AS UserCount
+                    FROM UserInfo
+                  ";
+
+            List<SqlParameter> list = new List<SqlParameter>();
+            try
+            {
+                return DBhelper.ReadDataRow(connStr, dbCommand, list);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
         }
     }
 }

@@ -27,8 +27,8 @@ namespace AccountNote.DBSource
                          Caption,
                          Amount,
                          ActType,
-                         CreatDate
-                    FROM Accounting
+                         CreateDate
+                    FROM AccountingNote
                     WHERE UserID = @userID
                   ";
 
@@ -77,9 +77,9 @@ namespace AccountNote.DBSource
                          Caption,
                          Amount,
                          ActType,
-                         CreatDate,
+                         CreateDate,
                          Body
-                    FROM Accounting
+                    FROM AccountingNote
                     WHERE ID = @id AND UserID = @userID
                   ";
 
@@ -132,15 +132,15 @@ namespace AccountNote.DBSource
             string connectionString = DBhelper.GetConnectionString();
 
             string dbCommandString =
-            @"INSERT INTO Accounting
-                       (UserID,Caption,Amount,ActType,CreatDate,Body)
+            @"INSERT INTO AccountingNote
+                       (UserID,Caption,Amount,ActType,CreateDate,Body)
                     VALUES
                        (
                          @userID, 
                          @caption,
                          @amount,
                          @actType,
-                         @creatDate, 
+                         @createDate, 
                          @body);
              
                 ";
@@ -150,7 +150,7 @@ namespace AccountNote.DBSource
             paramlist.Add(new SqlParameter("@caption", caption));
             paramlist.Add(new SqlParameter("@amount", amount));
             paramlist.Add(new SqlParameter("@actType", actType));
-            paramlist.Add(new SqlParameter("@creatDate", DateTime.Now));
+            paramlist.Add(new SqlParameter("@createDate", DateTime.Now));
             paramlist.Add(new SqlParameter("@body", body));
             try
             {
@@ -193,13 +193,13 @@ namespace AccountNote.DBSource
             string connectionString = DBhelper.GetConnectionString();
 
             string dbCommandString =
-            @"UPDATE [Accounting]    
+            @"UPDATE [AccountingNote]    
               SET
                      UserID=@userID, 
                      Caption=@caption,
                      Amount=@amount,
                      ActType=@actType,
-                     CreatDate=@creatDate, 
+                     CreateDate=@createDate, 
                      Body=@body
              WHERE 
                      ID=@id
@@ -210,7 +210,7 @@ namespace AccountNote.DBSource
             paramlist.Add(new SqlParameter("@caption", caption));
             paramlist.Add(new SqlParameter("@amount", amount));
             paramlist.Add(new SqlParameter("@actType", actType));
-            paramlist.Add(new SqlParameter("@creatDate", DateTime.Now));
+            paramlist.Add(new SqlParameter("@createDate", DateTime.Now));
             paramlist.Add(new SqlParameter("@body", body));
             paramlist.Add(new SqlParameter("ID", @id));
             try
@@ -257,7 +257,7 @@ namespace AccountNote.DBSource
             string connectionString = DBhelper.GetConnectionString();
 
             string dbCommandString =
-            @"DELETE [Accounting]    
+            @"DELETE [AccountingNote]    
               WHERE 
                    ID=@id
              
@@ -275,7 +275,27 @@ namespace AccountNote.DBSource
 
             }
         }
+        public static DataRow GetDateAndCount()
+        {
+            string connStr = DBhelper.GetConnectionString();
+            string dbCommand =
+                $@"SELECT Max(AccountingNote.CreateDate)AS FirstTime,
+                         MIN(AccountingNote.CreateDate)AS LastTime,
+                         Count(*)AS AccountCount
+                    FROM AccountingNote
+                  ";
 
+            List<SqlParameter> list = new List<SqlParameter>();
+            try
+            {
+                return DBhelper.ReadDataRow(connStr, dbCommand, list);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
 
     }
 }

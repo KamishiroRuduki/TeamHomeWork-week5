@@ -38,7 +38,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
 
-                            <asp:BoundField DataField="CreatDate" DataFormatString="{0:yyyy-MM-dd}" HeaderText="建立日期" />
+                            <asp:BoundField DataField="CreateDate" DataFormatString="{0:yyyy-MM-dd}" HeaderText="建立日期" />
 
                             <asp:TemplateField HeaderText="Act">
                                 <ItemTemplate>

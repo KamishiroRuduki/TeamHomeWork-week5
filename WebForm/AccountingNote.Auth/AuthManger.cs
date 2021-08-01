@@ -23,7 +23,7 @@ namespace AccountingNote.Auth
             string account = HttpContext.Current.Session["UserLoginInfo"] as string;
             if (account == null)
                 return null;
-            DataRow dr = UserInfoManager.GETUserInoAccount(account);
+            DataRow dr = UserInfoManager.GETUserInfoAccount(account);
 
             if (dr == null)
             {
@@ -54,7 +54,7 @@ namespace AccountingNote.Auth
                 return false;
             }
             //檢查此帳號是否存在
-            var dr = UserInfoManager.GETUserInoAccount(account);
+            var dr = UserInfoManager.GETUserInfoAccount(account);
             if (dr == null)
             {
                 errMsg = $"帳號{account}不存在";
