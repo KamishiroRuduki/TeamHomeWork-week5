@@ -61,12 +61,25 @@ namespace AccountNote.DBSource
             //    }
             //}//自帶connection.close()
         }
-        //public static string GetConnectionString()
-        //{
-        //    // string val = ConfigurationManager.AppSettings["ConnectionString"];
-        //    string val = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        //    return val;
-        //}
+        public static DataTable GetUserList()
+        {
+            string connStr = DBhelper.GetConnectionString();
+            string dbCommand =
+                @"SELECT  [ID] ,[Account],[Name] ,[Email],[UserLevel],[CreateDate]
+                   FROM UserInfo ";
+
+            List<SqlParameter> list = new List<SqlParameter>();
+            try
+            {
+                return DBhelper.ReadDataTable(connStr, dbCommand, list);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
         public static void CreateAccounting(string userID, string caption, int amount, int actType, string body)
         {
             if (amount < 0 || amount > 1000000)

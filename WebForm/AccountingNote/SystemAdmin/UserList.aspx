@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AccountingList.aspx.cs" Inherits="AccountingNote.SystemAdmin.AccountingList" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UserList.aspx.cs" Inherits="AccountingNote.SystemAdmin.UserList" %>
 
 <!DOCTYPE html>
 
@@ -23,15 +23,14 @@
                     <a href="UserList.aspx">會員管理</a>
                 </td>
                 <td>
-                    <asp:Button ID="btnAdd" runat="server" Text="AddAccounting" OnClick="btnAdd_Click" />
-                    <asp:GridView ID="gvAccountList" runat="server" AutoGenerateColumns="False" OnRowDataBound ="gvAccountList_RowDataBound" >
+                    <asp:GridView ID="gvUserList" runat="server" AutoGenerateColumns="False" OnRowDataBound ="gvUserList_RowDataBound" >
                         <Columns>
-
-                            <asp:BoundField DataField="Caption" HeaderText="標題" />
-                            <asp:BoundField DataField="Amount" HeaderText="金額" />
+                            <asp:BoundField DataField="Account" HeaderText="帳號" />
+                            <asp:BoundField DataField="Name" HeaderText="姓名" />
+                            <asp:BoundField DataField="Email" HeaderText="Email" />
                            <%-- <asp:BoundField DataField="ActType" HeaderText="IN/OUT" />--%>
 
-                            <asp:TemplateField HeaderText="IN/OUT">
+                            <asp:TemplateField HeaderText="等級">
                                   <ItemTemplate>
                                      <%--<%# ((int)Eval("ActType") == 0) ? "支出" : "收入" %>--%>
                                       <%--<asp:Literal ID="ltlActType" runat="server"></asp:Literal>--%>
@@ -43,7 +42,7 @@
 
                             <asp:TemplateField HeaderText="Act">
                                 <ItemTemplate>
-                                    <a href="/SystemAdmin/AccountingDetail.aspx?ID=<%# Eval("ID") %>">Edit</a>
+                                    <a href="/SystemAdmin/UserList.aspx?ID=<%# Eval("ID") %>">Edit</a>
                                 </ItemTemplate>
                             </asp:TemplateField>
 
