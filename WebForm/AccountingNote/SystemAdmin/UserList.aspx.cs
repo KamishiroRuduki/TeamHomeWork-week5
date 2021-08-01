@@ -32,6 +32,9 @@ namespace AccountingNote.SystemAdmin
             var dt = UserInfoManager.GetUserList();
             if (dt.Rows.Count > 0)
             {
+                if (UserInfoManager.IsAdministrator(this.Session["UserLoginInfo"].ToString()))
+                    btnAdd.Visible = true;
+
                 this.gvUserList.DataSource = dt;
                 this.gvUserList.DataBind();
             }
@@ -41,6 +44,17 @@ namespace AccountingNote.SystemAdmin
                 this.plcNoData.Visible = true;
 
             }
+        }
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (!UserInfoManager.IsAdministrator(this.Session["UserLoginInfo"].ToString()))
+            {
+                Response.Redirect("/SystemAdmin/UserList.aspx");
+                return;
+            }
+
+            else
+                Response.Redirect("/SystemAdmin/UserDetail.aspx");
         }
         protected void gvUserList_RowDataBound(object sender, GridViewRowEventArgs e)
         {

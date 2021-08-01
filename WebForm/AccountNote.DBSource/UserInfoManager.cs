@@ -80,57 +80,6 @@ namespace AccountNote.DBSource
             }
         }
 
-        public static void CreateAccounting(string userID, string caption, int amount, int actType, string body)
-        {
-            if (amount < 0 || amount > 1000000)
-                throw new ArgumentException("Amount必須介於0到1000000之間");
-            if (actType < 0 || actType > 1)
-                throw new ArgumentException("actType必須介於0到1之間");
-
-
-            string connectionString = DBhelper.GetConnectionString();
-
-            string dbCommandString =
-            @"INSERT INTO AccountingNote
-                       (UserID,Caption,Amount,ActType,CreateDate,Body)
-                    VALUES
-                       (
-                         @userID, 
-                         @caption,
-                         @amount,
-                         @actType,
-                         @createDate, 
-                         @body);
-             
-                ";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(dbCommandString, connection))
-                {
-
-                    command.Parameters.AddWithValue("@userID", userID);//確保資料安全性
-                    command.Parameters.AddWithValue("@caption", caption);//確保資料安全性
-                    command.Parameters.AddWithValue("@amount", amount);//確保資料安全性
-                    command.Parameters.AddWithValue("@actType", actType);//確保資料安全性
-                                                                         // command.Parameters.AddWithValue("@creatDate", acc);//確保資料安全性
-                    command.Parameters.AddWithValue("@body", body);//確保資料安全性
-
-                    try
-                    {
-                        connection.Open();
-                        int effectRows = command.ExecuteNonQuery();
-                        Console.WriteLine($"{effectRows} has changed");
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                    }
-                }
-            }
-
-            //}
-        }
         public static DataRow GetUserCount()
         {
             string connStr = DBhelper.GetConnectionString();
@@ -149,6 +98,89 @@ namespace AccountNote.DBSource
                 Logger.WriteLog(ex);
                 return null;
             }
+        }
+        public static bool IsAdministrator(string account)
+        {
+            string connStr = DBhelper.GetConnectionString();
+            string dbCommand =
+                $@"SELECT UserLevel
+                    FROM UserInfo
+                    WHERE Account = @account
+                  ";
+
+            List<SqlParameter> list = new List<SqlParameter>();
+            list.Add(new SqlParameter("@account", account));
+            try
+            {
+                DataRow dr = DBhelper.ReadDataRow(connStr, dbCommand, list);
+                if(dr == null)
+                    return false;
+                if (string.Compare(dr[0].ToString(), "0") == 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return false;
+            }
+        }
+        public static void CreateUser(string account, string password, string name, string email, int actType)
+        {
+            string connectionString = DBhelper.GetConnectionString();
+
+            string dbCommandString =
+            @"INSERT INTO UserInfo
+                       (ID,Account,PWD,Name,Email,UserLevel,CreateDate)
+                    VALUES
+                       (
+                         @id,
+                         @account, 
+                         @password,
+                         @name,
+                         @email,
+                         @actType,
+                         @CreateDate);
+             
+                ";
+            string userInfoID = GetUserInfoID();
+            List<SqlParameter> paramlist = new List<SqlParameter>();
+            paramlist.Add(new SqlParameter("@id", userInfoID));
+            paramlist.Add(new SqlParameter("@account", account));
+            paramlist.Add(new SqlParameter("@password", password));
+            paramlist.Add(new SqlParameter("@name", name));
+            paramlist.Add(new SqlParameter("@email", email));
+            paramlist.Add(new SqlParameter("@actType", actType));
+            paramlist.Add(new SqlParameter("@CreateDate", DateTime.Now));
+            try
+            {
+                DBhelper.ModifyData(connectionString, dbCommandString, paramlist);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+            }
+        }
+        public static string GetUserInfoID()
+        {
+            string connStr = DBhelper.GetConnectionString();
+            string dbCommand =
+                @"SELECT NEWID() ";
+
+            List<SqlParameter> list = new List<SqlParameter>();
+            try
+            {
+                DataRow dr = DBhelper.ReadDataRow(connStr, dbCommand, list);
+                string userInfoID = dr[0].ToString();
+                return userInfoID;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+
         }
     }
 }

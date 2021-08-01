@@ -77,9 +77,6 @@ namespace AccountNote.DBSource
                     int effectRows = command.ExecuteNonQuery();
                     return effectRows;
 
-
-
-
                 }
             }
         }

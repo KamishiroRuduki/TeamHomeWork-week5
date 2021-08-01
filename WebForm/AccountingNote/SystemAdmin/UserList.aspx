@@ -23,6 +23,7 @@
                     <a href="UserList.aspx">會員管理</a>
                 </td>
                 <td>
+                    <asp:Button ID="btnAdd" runat="server" Text="AddAccounting" OnClick="btnAdd_Click" Visible="False" />
                     <asp:GridView ID="gvUserList" runat="server" AutoGenerateColumns="False" OnRowDataBound ="gvUserList_RowDataBound" >
                         <Columns>
                             <asp:BoundField DataField="Account" HeaderText="帳號" />
