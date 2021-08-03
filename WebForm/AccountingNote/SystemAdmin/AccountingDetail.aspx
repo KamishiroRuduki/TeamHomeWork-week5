@@ -22,6 +22,7 @@
                     <a href="UserList.aspx">會員管理</a>
                 </td>
                 <td>
+                    <h3>流水帳管理</h3>
                     Type:<asp:DropDownList ID="ddlActType" runat="server">
                         <asp:ListItem Value="0">支出</asp:ListItem>
                         <asp:ListItem Value="1">收入</asp:ListItem>

@@ -33,6 +33,7 @@ namespace AccountingNote.Auth
 
             UserInfoModel model = new UserInfoModel();
             model.ID = dr["ID"].ToString();
+            model.PWD = dr["PWD"].ToString();
             model.Account = dr["Account"].ToString();
             model.Name = dr["Name"].ToString();
             model.Email = dr["Email"].ToString();

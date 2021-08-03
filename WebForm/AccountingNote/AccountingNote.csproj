@@ -78,6 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="about.aspx" />
+    <Content Include="css\AccountingList.css" />
+    <Content Include="css\default.css" />
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
@@ -86,6 +88,7 @@
     <Content Include="SystemAdmin\UserDetail.aspx" />
     <Content Include="SystemAdmin\UserInfo.aspx" />
     <Content Include="SystemAdmin\UserList.aspx" />
+    <Content Include="SystemAdmin\UserPassword.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +151,13 @@
     </Compile>
     <Compile Include="SystemAdmin\UserList.aspx.designer.cs">
       <DependentUpon>UserList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SystemAdmin\UserPassword.aspx.cs">
+      <DependentUpon>UserPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemAdmin\UserPassword.aspx.designer.cs">
+      <DependentUpon>UserPassword.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

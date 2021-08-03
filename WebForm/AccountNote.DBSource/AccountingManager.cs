@@ -12,12 +12,7 @@ namespace AccountNote.DBSource
 {
     public class AccountingManager
     {
-        //public static string GetConnectionString()
-        //{
-        //    // string val = ConfigurationManager.AppSettings["ConnectionString"];
-        //    string val = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        //    return val;
-        //}
+
 
         public static DataTable GetAccountingList(string userID)
         {
@@ -186,6 +181,34 @@ namespace AccountNote.DBSource
 
             }
         }
+        /// <summary>
+        /// 刪除User後，連帶刪除該User的Account的資料
+        /// </summary>
+        /// <param name="userid"></param>
+        public static void DeleteAll(string userid)
+        {
+
+            string connectionString = DBhelper.GetConnectionString();
+
+            string dbCommandString =
+            @"DELETE [AccountingNote]    
+              WHERE 
+                   UserID=@userid
+             
+                ";
+            List<SqlParameter> paramlist = new List<SqlParameter>();
+            paramlist.Add(new SqlParameter("UserID", @userid));
+
+            try
+            {
+                DBhelper.ModifyData(connectionString, dbCommandString, paramlist);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+
+            }
+        }
         public static DataRow GetDateAndCount()
         {
             string connStr = DBhelper.GetConnectionString();
@@ -207,6 +230,29 @@ namespace AccountNote.DBSource
                 return null;
             }
         }
+        public static DataRow GetAmount(string userid, int actType)
+        {
+            string connStr = DBhelper.GetConnectionString();
+            string dbCommand =
+                $@" SELECT SUM(Amount) AS Amount
+                    FROM AccountingNote
+                    WHERE UserID=@userid AND ActType=@actType
+                  ";
+
+            List<SqlParameter> list = new List<SqlParameter>();
+            list.Add(new SqlParameter("@userid", userid));
+            list.Add(new SqlParameter("@actType", actType));
+            try
+            {
+                return DBhelper.ReadDataRow(connStr, dbCommand, list);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
 
 
     }

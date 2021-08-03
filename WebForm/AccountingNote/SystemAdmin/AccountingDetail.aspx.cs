@@ -14,7 +14,7 @@ namespace AccountingNote.SystemAdmin
         {
 
             if (!AuthManger.IsLogined())
-          //if(!AuthManger.IsLogined())
+            //if(!AuthManger.IsLogined())
             {
                 Response.Redirect("/login.aspx");
                 return;
@@ -30,41 +30,41 @@ namespace AccountingNote.SystemAdmin
             }
             if (!this.IsPostBack)
             {
-            if(this.Request.QueryString["ID"] == null)
-            {
-                this.btnDel.Visible = false;
-            }
-            else
-            {
-                this.btnDel.Visible = true;
-                string idtext = this.Request.QueryString["ID"];
-                int id;
-                if(int.TryParse(idtext,out id))
+                if (this.Request.QueryString["ID"] == null)
                 {
-                    var drAcc = AccountingManager.GetAccounting(id, cUser.ID);
-                    if(drAcc == null)
-                    {
-                        this.ltMsg.Text = "無資料";
-                        this.btnDel.Visible = false;
-                        this.btnSave.Visible = false;
-                    }
-                    else
-                    {
-                        this.ddlActType.SelectedValue = drAcc["ActType"].ToString();
-                        this.txtAmount.Text = drAcc["Amount"].ToString();
-                        this.txtCaption.Text = drAcc["Caption"].ToString();
-                        this.txtDesc.Text = drAcc["Body"].ToString();
-                    }
+                    this.btnDel.Visible = false;
                 }
+                else
+                {
+                    this.btnDel.Visible = true;
+                    string idtext = this.Request.QueryString["ID"];
+                    int id;
+                    if (int.TryParse(idtext, out id))
+                    {
+                        var drAcc = AccountingManager.GetAccounting(id, cUser.ID);
+                        if (drAcc == null)
+                        {
+                            this.ltMsg.Text = "無資料";
+                            this.btnDel.Visible = false;
+                            this.btnSave.Visible = false;
+                        }
+                        else
+                        {
+                            this.ddlActType.SelectedValue = drAcc["ActType"].ToString();
+                            this.txtAmount.Text = drAcc["Amount"].ToString();
+                            this.txtCaption.Text = drAcc["Caption"].ToString();
+                            this.txtDesc.Text = drAcc["Body"].ToString();
+                        }
+                    }
 
-            }
+                }
             }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
             List<string> msgList = new List<string>();
-            if(!this.CheckInput(out msgList))
+            if (!this.CheckInput(out msgList))
             {
                 this.ltMsg.Text = string.Join("<br/>", msgList);
                 return;
@@ -86,18 +86,18 @@ namespace AccountingNote.SystemAdmin
             int amount = Convert.ToInt32(amountText);
             int actType = Convert.ToInt32(actTypeText);
 
-            
+
             string idtext = this.Request.QueryString["ID"];
-            if( string.IsNullOrWhiteSpace(idtext))
+            if (string.IsNullOrWhiteSpace(idtext))
             {
                 AccountingManager.CreateAccounting(userID, caption, amount, actType, body);
             }
             else
             {
                 int id;
-            if (int.TryParse(idtext, out id))
-            {
-                    AccountingManager.UpateAccount(id,userID, caption, amount, actType, body);
+                if (int.TryParse(idtext, out id))
+                {
+                    AccountingManager.UpateAccount(id, userID, caption, amount, actType, body);
                 }
             }
             Response.Redirect("/SystemAdmin/AccountingList.aspx");
@@ -106,22 +106,22 @@ namespace AccountingNote.SystemAdmin
         private bool CheckInput(out List<string> errorMsgList)
         {
             List<string> msgList = new List<string>();
-            if(this.ddlActType.SelectedValue !="0"&& this.ddlActType.SelectedValue != "1")
+            if (this.ddlActType.SelectedValue != "0" && this.ddlActType.SelectedValue != "1")
             {
                 msgList.Add("Type必須是0或1");
             }
 
-            if(string.IsNullOrWhiteSpace(this.txtAmount.Text))
+            if (string.IsNullOrWhiteSpace(this.txtAmount.Text))
             {
                 msgList.Add("沒有Amount資料");
             }
             else
             {
                 int tempInt;
-                if(!int.TryParse(this.txtAmount.Text, out tempInt))
+                if (!int.TryParse(this.txtAmount.Text, out tempInt))
                 {
                     msgList.Add("Amount必須是數字");
-                }                
+                }
             }
             errorMsgList = msgList;
             if (msgList.Count == 0)

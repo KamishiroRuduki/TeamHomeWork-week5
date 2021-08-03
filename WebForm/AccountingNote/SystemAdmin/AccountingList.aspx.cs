@@ -35,6 +35,18 @@ namespace AccountingNote.SystemAdmin
             { 
             this.gvAccountList.DataSource = dt;
             this.gvAccountList.DataBind();
+                decimal Add, Minus;
+            var drAdd = AccountingManager.GetAmount(cUser.ID, 1);
+            var drMinus = AccountingManager.GetAmount(cUser.ID, 0);
+                if (drAdd == null)
+                    Add = 0;
+                else
+                    Add = Convert.ToDecimal(drAdd["Amount"].ToString());
+                if (drMinus == null)
+                    Minus = 0;
+                else
+                    Minus = Convert.ToDecimal(drMinus["Amount"].ToString());
+                this.lblAmount.Text = $"小計{Add - Minus}元";
             }
             else
             {

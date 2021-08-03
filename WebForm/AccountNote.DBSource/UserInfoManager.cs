@@ -228,7 +228,6 @@ namespace AccountNote.DBSource
         public static bool UpateUser(string id, string name, string email)
         {
 
-
             string connectionString = DBhelper.GetConnectionString();
 
             string dbCommandString =
@@ -241,12 +240,37 @@ namespace AccountNote.DBSource
              
                 ";
             List<SqlParameter> paramlist = new List<SqlParameter>();
-            //paramlist.Add(new SqlParameter("@userID", userID));
-            //paramlist.Add(new SqlParameter("@caption", caption));
-            //paramlist.Add(new SqlParameter("@amount", amount));
-            //paramlist.Add(new SqlParameter("@actType", actType));
             paramlist.Add(new SqlParameter("@name", name));
             paramlist.Add(new SqlParameter("@email", email));
+            paramlist.Add(new SqlParameter("ID", @id));
+            try
+            {
+
+                int effectRows = DBhelper.ModifyData(connectionString, dbCommandString, paramlist);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return false;
+            }
+        }
+        public static bool UpatePassword(string id, string pwd)
+        {
+
+            string connectionString = DBhelper.GetConnectionString();
+
+            string dbCommandString =
+            @"UPDATE [UserInfo]    
+              SET
+                     PWD=@pwd
+             WHERE 
+                     ID=@id
+             
+                ";
+            List<SqlParameter> paramlist = new List<SqlParameter>();
+            paramlist.Add(new SqlParameter("@PWD", pwd));
             paramlist.Add(new SqlParameter("ID", @id));
             try
             {

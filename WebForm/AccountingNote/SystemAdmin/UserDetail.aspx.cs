@@ -79,6 +79,7 @@ namespace AccountingNote.SystemAdmin
                             this.lblDate.Text = drAcc["CreateDate"].ToString();
                             lblAcc.Text = drAcc["Account"].ToString();
                             AccountPanel.Controls.Add(lblAcc);
+                            this.btnPwd.Visible = true;
                             if (drAcc["UserLevel"].ToString() == "0")
                                 this.lblLevel.Text = "管理員";
                             else
@@ -152,7 +153,8 @@ namespace AccountingNote.SystemAdmin
             }
             else
             {
-                    UserInfoManager.DeleteUser(idtext);
+                AccountingManager.DeleteAll(idtext);
+                UserInfoManager.DeleteUser(idtext);
             }
             if (!AuthManger.IsLogined())
             {
@@ -184,6 +186,11 @@ namespace AccountingNote.SystemAdmin
                 return true;
             else
                 return false;
+        }
+
+        protected void btnPwd_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"/SystemAdmin/UserPassword.aspx?ID={this.Request.QueryString["ID"]}");
         }
     }
 }

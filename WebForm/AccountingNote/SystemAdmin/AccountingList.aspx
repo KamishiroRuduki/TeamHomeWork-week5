@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link href="css/AccountingList.css" rel="stylesheet" type="text/css">
     <title></title>
 </head>
 <body>
@@ -23,7 +24,11 @@
                     <a href="UserList.aspx">會員管理</a>
                 </td>
                 <td>
+                    <div>
+                    <h3>流水帳管理</h3>
                     <asp:Button ID="btnAdd" runat="server" Text="AddAccounting" OnClick="btnAdd_Click" />
+                    <asp:Label ID="lblAmount" runat="server" Text="Label"></asp:Label>
+                        </div> 
                     <asp:GridView ID="gvAccountList" runat="server" AutoGenerateColumns="False" OnRowDataBound ="gvAccountList_RowDataBound" >
                         <Columns>
 
@@ -54,6 +59,7 @@
                             No Data
                         </p>
                     </asp:PlaceHolder>
+                    
                 </td>
             </tr>
         </table>
