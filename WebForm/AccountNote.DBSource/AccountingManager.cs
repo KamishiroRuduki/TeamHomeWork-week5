@@ -45,29 +45,6 @@ namespace AccountNote.DBSource
             }
         }
 
-        //private static DataTable ReadDataTable(string connStr, string dbCommand, List<SqlParameter> list)
-        //{
-        //    using (SqlConnection connection = new SqlConnection(connStr))
-        //    {
-        //        using (SqlCommand command = new SqlCommand(dbCommand, connection))
-        //        {
-
-        //            //    command.Parameters.AddWithValue("@userID", userID);//確保資料安全性
-        //            command.Parameters.AddRange(list.ToArray());
-
-        //                connection.Open();
-        //                SqlDataReader reader = command.ExecuteReader();
-
-        //                DataTable dt = new DataTable();
-        //                dt.Load(reader);
-
-
-        //                return dt;
-
-
-        //        }
-        //    }
-        //}
 
         public static DataRow GetAccounting(int id, string userID)
         {
@@ -97,29 +74,6 @@ namespace AccountNote.DBSource
             }
         }
 
-        //private static DataRow ReadDataRow(int id, string userID, string connStr, string dbCommand)
-        //{
-        //    using (SqlConnection connection = new SqlConnection(connStr))
-        //    {
-        //        using (SqlCommand command = new SqlCommand(dbCommand, connection))
-        //        {
-
-        //            command.Parameters.AddWithValue("@id", id);//確保資料安全性
-        //            command.Parameters.AddWithValue("@userID", userID);//確保資料安全性
-
-        //                connection.Open();
-        //                SqlDataReader reader = command.ExecuteReader();
-
-        //                DataTable dt = new DataTable();
-        //                dt.Load(reader);
-
-
-        //                return dt.Rows[0];
-
-
-        //        }
-        //    }
-        //}
 
         public static void CreateAccounting(string userID, string caption, int amount, int actType, string body)
         {
@@ -154,26 +108,7 @@ namespace AccountNote.DBSource
             paramlist.Add(new SqlParameter("@body", body));
             try
             {
-                //using (SqlConnection connection = new SqlConnection(connectionString))
-                //{
-                //    using (SqlCommand command = new SqlCommand(dbCommandString, connection))
-                //    {
 
-                //        command.Parameters.AddWithValue("@userID", userID);//確保資料安全性
-                //        command.Parameters.AddWithValue("@caption", caption);//確保資料安全性
-                //        command.Parameters.AddWithValue("@amount", amount);//確保資料安全性
-                //        command.Parameters.AddWithValue("@actType", actType);//確保資料安全性
-                //        command.Parameters.AddWithValue("@creatDate", DateTime.Now);//確保資料安全性
-                //        command.Parameters.AddWithValue("@body", body);//確保資料安全性
-
-
-                //        connection.Open();
-                //        int effectRows = command.ExecuteNonQuery();
-
-
-
-                //    }
-                //}
                 DBhelper.ModifyData(connectionString, dbCommandString, paramlist);
             }
             catch (Exception ex)
@@ -215,31 +150,7 @@ namespace AccountNote.DBSource
             paramlist.Add(new SqlParameter("ID", @id));
             try
             {
-                //using (SqlConnection connection = new SqlConnection(connectionString))
-                //{
-                //    using (SqlCommand command = new SqlCommand(dbCommandString, connection))
-                //    {
 
-                //        command.Parameters.AddWithValue("@userID", userID);//確保資料安全性
-                //        command.Parameters.AddWithValue("@caption", caption);//確保資料安全性
-                //        command.Parameters.AddWithValue("@amount", amount);//確保資料安全性
-                //        command.Parameters.AddWithValue("@actType", actType);//確保資料安全性
-                //        command.Parameters.AddWithValue("@creatDate", DateTime.Now);//確保資料安全性
-                //        command.Parameters.AddWithValue("@body", body);//確保資料安全性
-                //        command.Parameters.AddWithValue("ID", @id);//確保資料安全性
-
-
-                //        connection.Open();
-                //        int effectRows = command.ExecuteNonQuery();
-                //        if (effectRows == 1)
-                //            return true;
-                //        else
-                //            return false;
-
-
-
-                //    }
-                //}
                 int effectRows = DBhelper.ModifyData(connectionString, dbCommandString, paramlist);
                 return true;
 

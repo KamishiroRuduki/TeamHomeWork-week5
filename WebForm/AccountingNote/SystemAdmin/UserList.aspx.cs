@@ -29,31 +29,51 @@ namespace AccountingNote.SystemAdmin
 
             }
 
-            var dt = UserInfoManager.GetUserList();
-            if (dt.Rows.Count > 0)
-            {
-                if (UserInfoManager.IsAdministrator(this.Session["UserLoginInfo"].ToString()))
-                    btnAdd.Visible = true;
+            //if (UserInfoManager.IsAdministrator(this.Session["UserLoginInfo"].ToString()))
+            //{
 
-                this.gvUserList.DataSource = dt;
-                this.gvUserList.DataBind();
-            }
-            else
-            {
-                this.gvUserList.Visible = false;
-                this.plcNoData.Visible = true;
+            //    var dt = UserInfoManager.GetUserList();
+            //    if (dt.Rows.Count > 0)
+            //    {
+            //        if (UserInfoManager.IsAdministrator(this.Session["UserLoginInfo"].ToString()))
+            //            btnAdd.Visible = true;
 
-            }
-                    }
+            //        this.gvUserList.DataSource = dt;
+            //        this.gvUserList.DataBind();
+            //    }
+            //    else
+            //    {
+            //        this.gvUserList.Visible = false;
+            //        this.plcNoData.Visible = true;
+
+            //    }
+            //}
+            //else
+            //{
+                var dt = UserInfoManager.GetUserList();
+                if (dt.Rows.Count > 0)
+                {
+                    this.gvUserList.DataSource = dt;
+                    this.gvUserList.DataBind();
+                }
+                else
+                {
+                    this.gvUserList.Visible = false;
+                    this.plcNoData.Visible = true;
+
+                }
+          //  }
+
+        }
         protected void btnAdd_Click(object sender, EventArgs e)
         {
-            if (!UserInfoManager.IsAdministrator(this.Session["UserLoginInfo"].ToString()))
-            {
-                Response.Redirect("/SystemAdmin/UserList.aspx");
-                return;
-            }
+            //if (!UserInfoManager.IsAdministrator(this.Session["UserLoginInfo"].ToString()))
+            //{
+            //    Response.Redirect("/SystemAdmin/UserList.aspx");
+            //    return;
+            //}
 
-            else
+            //else
                 Response.Redirect("/SystemAdmin/UserDetail.aspx");
         }
         protected void gvUserList_RowDataBound(object sender, GridViewRowEventArgs e)

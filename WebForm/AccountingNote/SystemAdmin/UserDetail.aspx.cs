@@ -35,7 +35,7 @@ namespace AccountingNote.SystemAdmin
             //if (!this.IsPostBack)
             //{
             // this.AccountPanel.Controls.Clear();
-            if (this.Request.QueryString["ID"] == null && UserInfoManager.IsAdministrator(this.Session["UserLoginInfo"].ToString()))
+            if (this.Request.QueryString["ID"] == null )
             {
                 TextBox tb = new TextBox();
                 tb.ID = "tb";
@@ -55,24 +55,36 @@ namespace AccountingNote.SystemAdmin
             {
                 this.btnDel.Visible = true;
                 string idtext = this.Request.QueryString["ID"];
-                int id;
-                if (int.TryParse(idtext, out id))
+                Label lblAcc = new Label();
+                lblAcc.ID = "lblID";
+                lbl.Text = "帳號:";
+                AccountPanel.Controls.Add(lbl);
+                if (!this.IsPostBack)
                 {
-                    var drAcc = AccountingManager.GetAccounting(id, cUser.ID);
-                    if (drAcc == null)
+                    if (idtext != null)
                     {
-                        this.ltMsg.Text = "無資料";
-                        this.btnDel.Visible = false;
-                        this.btnSave.Visible = false;
-                    }
-                    else
-                    {
-                        this.ddlActType.SelectedValue = drAcc["ActType"].ToString();
-                        // this.txtAccount.Text = drAcc["Account"].ToString();
-                        this.txtName.Text = drAcc["Name"].ToString();
-                        this.txtMail.Text = drAcc["Email"].ToString();
-                        this.lblDate.Text = drAcc["CreateDate"].ToString();
+                        var drAcc = UserInfoManager.GETUserInfoData(idtext);
+                        if (drAcc == null)
+                        {
+                            this.ltMsg.Text = "無資料";
+                            this.btnDel.Visible = false;
+                            this.btnSave.Visible = false;
+                        }
+                        else
+                        {
+                            this.ddlActType.SelectedValue = drAcc["UserLevel"].ToString();
+                            // this.txtAccount.Text = drAcc["Account"].ToString();
+                            this.txtName.Text = drAcc["Name"].ToString();
+                            this.txtMail.Text = drAcc["Email"].ToString();
+                            this.lblDate.Text = drAcc["CreateDate"].ToString();
+                            lblAcc.Text = drAcc["Account"].ToString();
+                            AccountPanel.Controls.Add(lblAcc);
+                            if (drAcc["UserLevel"].ToString() == "0")
+                                this.lblLevel.Text = "管理員";
+                            else
+                                this.lblLevel.Text = "一般會員";
 
+                        }
                     }
                 }
 
@@ -95,10 +107,16 @@ namespace AccountingNote.SystemAdmin
                 Response.Redirect("/login.aspx");
                 return;
             }
-            TextBox txtbox = AccountPanel.FindControl("tb") as TextBox;
+            string accountText = string.Empty;
+            if (this.Request.QueryString["ID"] == null)
+            {
+                TextBox txtbox = AccountPanel.FindControl("tb") as TextBox;
+                accountText = txtbox.Text;
+            }
+
+
             string userID = currentUser.ID;
             string actTypeText = this.ddlActType.SelectedValue;
-            string accountText = txtbox.Text;
             string nameText = this.txtName.Text;
             string emailText = this.txtMail.Text;
 
@@ -108,22 +126,40 @@ namespace AccountingNote.SystemAdmin
             string idtext = this.Request.QueryString["ID"];
             if (string.IsNullOrWhiteSpace(idtext))
             {
+                if (!UserInfoManager.IsAccountCreated(accountText))
+                { 
+                    this.ltMsg.Text = "此帳號已經被使用過了";
+                    return;
+                }
+
                 UserInfoManager.CreateUser(accountText, nameText, emailText, actType);
             }
-            //else
-            //{
-            //    int id;
-            //    if (int.TryParse(idtext, out id))
-            //    {
-            //        AccountingManager.UpateAccount(id, userID, caption, amount, actType, body);
-            //    }
-            //}
+            else
+            {
+                UserInfoManager.UpateUser(idtext, nameText, emailText);
+
+
+            }
             Response.Redirect("/SystemAdmin/UserList.aspx");
         }
 
         protected void btnDel_Click(object sender, EventArgs e)
         {
-
+            string idtext = this.Request.QueryString["ID"];
+            if (string.IsNullOrWhiteSpace(idtext))
+            {
+                return;
+            }
+            else
+            {
+                    UserInfoManager.DeleteUser(idtext);
+            }
+            if (!AuthManger.IsLogined())
+            {
+                Response.Redirect("/login.aspx");
+                return;
+            }
+            Response.Redirect("/SystemAdmin/UserList.aspx");
         }
         private bool CheckInput(out List<string> errorMsgList)
         {

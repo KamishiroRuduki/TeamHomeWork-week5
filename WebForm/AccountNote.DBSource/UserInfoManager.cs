@@ -17,7 +17,7 @@ namespace AccountNote.DBSource
         {
             string connectionString = DBhelper.GetConnectionString();
             string dbCommandString =
-                @"SELECT  [ID] ,[Account],[PWD] ,[Name] ,[Email]
+                @"SELECT  [ID] ,[Account],[PWD] ,[Name] ,[Email],[UserLevel],[CreateDate]
                    FROM UserInfo
                    WHERE [Account] = @account
                 ";
@@ -33,33 +33,27 @@ namespace AccountNote.DBSource
                 Logger.WriteLog(ex);
                 return null;
             }
-            //using (SqlConnection connection = new SqlConnection(connectionString))
-            //{
-            //    SqlCommand command = new SqlCommand(dbCommandString, connection);
-            //    command.Parameters.AddWithValue("@account", account);//確保資料安全性
+        }
+        public static DataRow GETUserInfoData(string ID)
+        {
+            string connectionString = DBhelper.GetConnectionString();
+            string dbCommandString =
+                @"SELECT  [ID] ,[Account],[PWD] ,[Name] ,[Email],[UserLevel],[CreateDate]
+                   FROM UserInfo
+                   WHERE [ID] = @id
+                ";
+            List<SqlParameter> list = new List<SqlParameter>();
+            list.Add(new SqlParameter("@id", ID));
 
-            //    try
-            //    {
-            //        connection.Open();
-            //        SqlDataReader reader = command.ExecuteReader();
-
-            //        DataTable dt = new DataTable();
-            //        dt.Load(reader);
-            //        reader.Close();
-
-            //        if (dt.Rows.Count == 0)
-            //            return null;
-
-            //        DataRow dr = dt.Rows[0];
-            //        return dr;
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Console.WriteLine(ex.ToString());
-            //        return null;
-            //    }
-            //}//自帶connection.close()
+            try
+            {
+                return DBhelper.ReadDataRow(connectionString, dbCommandString, list);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
         }
         public static DataTable GetUserList()
         {
@@ -69,6 +63,26 @@ namespace AccountNote.DBSource
                    FROM UserInfo ";
 
             List<SqlParameter> list = new List<SqlParameter>();
+            try
+            {
+                return DBhelper.ReadDataTable(connStr, dbCommand, list);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+        public static DataTable GetUserList( string account)
+        {
+            string connStr = DBhelper.GetConnectionString();
+            string dbCommand =
+                @"SELECT  [ID] ,[Account],[Name] ,[Email],[UserLevel],[CreateDate]
+                   FROM UserInfo 
+                   WHERE [Account] = @account";
+
+            List<SqlParameter> list = new List<SqlParameter>();
+            list.Add(new SqlParameter("@account", account));
             try
             {
                 return DBhelper.ReadDataTable(connStr, dbCommand, list);
@@ -126,6 +140,31 @@ namespace AccountNote.DBSource
                 return false;
             }
         }
+        public static bool IsAccountCreated(string account)
+        {
+            string connStr = DBhelper.GetConnectionString();
+            string dbCommand =
+                $@"SELECT *
+                    FROM UserInfo
+                    WHERE Account = @account
+                  ";
+
+            List<SqlParameter> list = new List<SqlParameter>();
+            list.Add(new SqlParameter("@account", account));
+            try
+            {
+                DataTable dt = DBhelper.ReadDataTable(connStr, dbCommand, list);
+                if (dt.Rows.Count > 0 )
+                    return false;
+                else
+                    return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return false;
+            }
+        }
         public static void CreateUser(string account, string name, string email, int actType)
         {
             string connectionString = DBhelper.GetConnectionString();
@@ -160,6 +199,66 @@ namespace AccountNote.DBSource
             catch (Exception ex)
             {
                 Logger.WriteLog(ex);
+            }
+        }
+        public static void DeleteUser(string id)
+        {
+
+            string connectionString = DBhelper.GetConnectionString();
+
+            string dbCommandString =
+            @"DELETE [UserInfo]    
+              WHERE 
+                   ID=@id
+             
+                ";
+            List<SqlParameter> paramlist = new List<SqlParameter>();
+            paramlist.Add(new SqlParameter("ID", @id));
+
+            try
+            {
+                DBhelper.ModifyData(connectionString, dbCommandString, paramlist);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+
+            }
+        }
+        public static bool UpateUser(string id, string name, string email)
+        {
+
+
+            string connectionString = DBhelper.GetConnectionString();
+
+            string dbCommandString =
+            @"UPDATE [UserInfo]    
+              SET
+                     Name=@name, 
+                     Email=@email
+             WHERE 
+                     ID=@id
+             
+                ";
+            List<SqlParameter> paramlist = new List<SqlParameter>();
+            //paramlist.Add(new SqlParameter("@userID", userID));
+            //paramlist.Add(new SqlParameter("@caption", caption));
+            //paramlist.Add(new SqlParameter("@amount", amount));
+            //paramlist.Add(new SqlParameter("@actType", actType));
+            paramlist.Add(new SqlParameter("@name", name));
+            paramlist.Add(new SqlParameter("@email", email));
+            paramlist.Add(new SqlParameter("ID", @id));
+            try
+            {
+
+                int effectRows = DBhelper.ModifyData(connectionString, dbCommandString, paramlist);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return false;
             }
         }
         public static string GetUserInfoID()
