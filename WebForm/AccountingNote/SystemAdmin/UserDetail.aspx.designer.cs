@@ -33,31 +33,13 @@ namespace AccountingNote.SystemAdmin
         protected global::System.Web.UI.WebControls.DropDownList ddlActType;
 
         /// <summary>
-        /// txtAccount コントロール。
+        /// AccountPanel コントロール。
         /// </summary>
         /// <remarks>
         /// 自動生成されたフィールド。
         /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAccount;
-
-        /// <summary>
-        /// PWD コントロール。
-        /// </summary>
-        /// <remarks>
-        /// 自動生成されたフィールド。
-        /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PWD;
-
-        /// <summary>
-        /// txtPWD コントロール。
-        /// </summary>
-        /// <remarks>
-        /// 自動生成されたフィールド。
-        /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPWD;
+        protected global::System.Web.UI.WebControls.Panel AccountPanel;
 
         /// <summary>
         /// txtName コントロール。

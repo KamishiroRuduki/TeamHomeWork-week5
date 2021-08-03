@@ -13,6 +13,8 @@ namespace AccountingNote.SystemAdmin
 {
     public partial class UserDetail : System.Web.UI.Page
     {
+        private static Label lbl = new Label();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!AuthManger.IsLogined())
@@ -30,46 +32,52 @@ namespace AccountingNote.SystemAdmin
                 return;
 
             }
-            if (!this.IsPostBack)
+            //if (!this.IsPostBack)
+            //{
+            // this.AccountPanel.Controls.Clear();
+            if (this.Request.QueryString["ID"] == null && UserInfoManager.IsAdministrator(this.Session["UserLoginInfo"].ToString()))
             {
-                if (this.Request.QueryString["ID"] == null && UserInfoManager.IsAdministrator(this.Session["UserLoginInfo"].ToString()))
+                TextBox tb = new TextBox();
+                tb.ID = "tb";
+                lbl.Text = "帳號:";
+                AccountPanel.Controls.Add(lbl);
+                AccountPanel.Controls.Add(tb);
+                if (!this.IsPostBack)
                 {
                     this.btnDel.Visible = true;
-                    this.txtAccount.Enabled = true;
-                    this.txtPWD.Enabled = true;
                     this.ddlActType.Visible = true;
                     this.lblDate.Visible = false;
                     this.lblLevel.Visible = false;
-                    this.txtPWD.Visible = true;
-                    this.PWD.Visible = true;
-                }
-                else
-                {
-                    this.btnDel.Visible = true;
-                    string idtext = this.Request.QueryString["ID"];
-                    int id;
-                    if (int.TryParse(idtext, out id))
-                    {
-                        var drAcc = AccountingManager.GetAccounting(id, cUser.ID);
-                        if (drAcc == null)
-                        {
-                            this.ltMsg.Text = "無資料";
-                            this.btnDel.Visible = false;
-                            this.btnSave.Visible = false;
-                        }
-                        else
-                        {
-                            this.ddlActType.SelectedValue = drAcc["ActType"].ToString();
-                            this.txtAccount.Text = drAcc["Account"].ToString();
-                            this.txtName.Text = drAcc["Name"].ToString();
-                            this.txtMail.Text = drAcc["Email"].ToString();
-                            this.lblDate.Text = drAcc["CreateDate"].ToString();
-
-                        }
-                    }
 
                 }
             }
+            else
+            {
+                this.btnDel.Visible = true;
+                string idtext = this.Request.QueryString["ID"];
+                int id;
+                if (int.TryParse(idtext, out id))
+                {
+                    var drAcc = AccountingManager.GetAccounting(id, cUser.ID);
+                    if (drAcc == null)
+                    {
+                        this.ltMsg.Text = "無資料";
+                        this.btnDel.Visible = false;
+                        this.btnSave.Visible = false;
+                    }
+                    else
+                    {
+                        this.ddlActType.SelectedValue = drAcc["ActType"].ToString();
+                        // this.txtAccount.Text = drAcc["Account"].ToString();
+                        this.txtName.Text = drAcc["Name"].ToString();
+                        this.txtMail.Text = drAcc["Email"].ToString();
+                        this.lblDate.Text = drAcc["CreateDate"].ToString();
+
+                    }
+                }
+
+            }
+            // }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -87,11 +95,10 @@ namespace AccountingNote.SystemAdmin
                 Response.Redirect("/login.aspx");
                 return;
             }
-
+            TextBox txtbox = AccountPanel.FindControl("tb") as TextBox;
             string userID = currentUser.ID;
             string actTypeText = this.ddlActType.SelectedValue;
-            string accountText = this.txtAccount.Text;
-            string passwordText = this.txtPWD.Text;
+            string accountText = txtbox.Text;
             string nameText = this.txtName.Text;
             string emailText = this.txtMail.Text;
 
@@ -101,7 +108,7 @@ namespace AccountingNote.SystemAdmin
             string idtext = this.Request.QueryString["ID"];
             if (string.IsNullOrWhiteSpace(idtext))
             {
-                UserInfoManager.CreateUser(accountText, passwordText, nameText, emailText, actType);
+                UserInfoManager.CreateUser(accountText, nameText, emailText, actType);
             }
             //else
             //{

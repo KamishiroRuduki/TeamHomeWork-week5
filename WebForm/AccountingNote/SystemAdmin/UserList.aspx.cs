@@ -44,7 +44,7 @@ namespace AccountingNote.SystemAdmin
                 this.plcNoData.Visible = true;
 
             }
-        }
+                    }
         protected void btnAdd_Click(object sender, EventArgs e)
         {
             if (!UserInfoManager.IsAdministrator(this.Session["UserLoginInfo"].ToString()))

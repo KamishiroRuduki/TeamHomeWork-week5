@@ -26,9 +26,9 @@
                         <asp:ListItem Value="0">管理員</asp:ListItem>
                         <asp:ListItem Value="1">一般會員</asp:ListItem>
                          </asp:DropDownList><br />
-                    帳號:<asp:TextBox ID="txtAccount" runat="server" Enabled="False"></asp:TextBox>
-                    <asp:Label ID="PWD" runat="server" Text="密碼"  Visible="False"></asp:Label>
-                    <asp:TextBox ID="txtPWD" TextMode="Password" runat="server" Enabled="False" Visible="False"></asp:TextBox><br/>
+                    <asp:Panel ID="AccountPanel" runat="server" Width="225px">
+                    </asp:Panel>
+                    <%--<asp:TextBox ID="txtAccount" runat="server" Enabled="False"></asp:TextBox>--%>
                     姓名:<asp:TextBox ID="txtName" runat="server"></asp:TextBox><br/>
                     Email:<asp:TextBox ID="txtMail" TextMode="Email" runat="server"></asp:TextBox><br/>
                     等級:<asp:Label ID="lblLevel" runat="server"></asp:Label><br />

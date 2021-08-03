@@ -43,7 +43,7 @@
 
                             <asp:TemplateField HeaderText="Act">
                                 <ItemTemplate>
-                                    <a href="/SystemAdmin/UserList.aspx?ID=<%# Eval("ID") %>">Edit</a>
+                                    <a href="/SystemAdmin/UserDetail.aspx?ID=<%# Eval("ID") %>">Edit</a>
                                 </ItemTemplate>
                             </asp:TemplateField>
 

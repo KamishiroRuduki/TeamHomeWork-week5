@@ -126,7 +126,7 @@ namespace AccountNote.DBSource
                 return false;
             }
         }
-        public static void CreateUser(string account, string password, string name, string email, int actType)
+        public static void CreateUser(string account, string name, string email, int actType)
         {
             string connectionString = DBhelper.GetConnectionString();
 
@@ -148,7 +148,7 @@ namespace AccountNote.DBSource
             List<SqlParameter> paramlist = new List<SqlParameter>();
             paramlist.Add(new SqlParameter("@id", userInfoID));
             paramlist.Add(new SqlParameter("@account", account));
-            paramlist.Add(new SqlParameter("@password", password));
+            paramlist.Add(new SqlParameter("@password", "12345"));
             paramlist.Add(new SqlParameter("@name", name));
             paramlist.Add(new SqlParameter("@email", email));
             paramlist.Add(new SqlParameter("@actType", actType));
