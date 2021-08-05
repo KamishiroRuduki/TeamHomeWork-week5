@@ -42,6 +42,24 @@ namespace AccountingNote.SystemAdmin
         protected global::System.Web.UI.WebControls.GridView gvUserList;
 
         /// <summary>
+        /// ltPage コントロール。
+        /// </summary>
+        /// <remarks>
+        /// 自動生成されたフィールド。
+        /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltPage;
+
+        /// <summary>
+        /// UcPager コントロール。
+        /// </summary>
+        /// <remarks>
+        /// 自動生成されたフィールド。
+        /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
+        /// </remarks>
+        protected global::AccountingNote.UserControl.UcPager UcPager;
+
+        /// <summary>
         /// plcNoData コントロール。
         /// </summary>
         /// <remarks>

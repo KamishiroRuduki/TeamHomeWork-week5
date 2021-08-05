@@ -32,9 +32,12 @@ namespace AccountingNote.SystemAdmin
 
             var dt = AccountingManager.GetAccountingList(cUser.ID);
             if(dt.Rows.Count>0)
-            { 
-            this.gvAccountList.DataSource = dt;
-            this.gvAccountList.DataBind();
+            {
+                var dtPaged = this.GetPageDataTable(dt);
+                this.gvAccountList.DataSource = dtPaged;
+                this.gvAccountList.DataBind();
+                this.UcPager.TotalSize = dt.Rows.Count;
+                this.UcPager.Bind();
                 decimal Add, Minus;
             var drAdd = AccountingManager.GetAmount(cUser.ID, 1);
             var drMinus = AccountingManager.GetAmount(cUser.ID, 0);
@@ -67,25 +70,60 @@ namespace AccountingNote.SystemAdmin
                 Response.Redirect("/SystemAdmin/AccountingDetail.aspx");
         }
 
+        private int GetCurrectPage()
+        {
+            string pageText = Request.QueryString["Page"];
+            if (string.IsNullOrWhiteSpace(pageText))
+                return 1;
+            int intPage;
+            if (!int.TryParse(pageText, out intPage))
+                return 1;
+            if (intPage <= 0)
+                return 1;
+            return intPage;
+        }
+
+        private DataTable GetPageDataTable(DataTable dt)
+        {
+            //  DataTable dtPaged = (dt.Rows.Count==0)?dt.Clone() : dt.Copy();
+            DataTable dtPaged = dt.Clone();
+
+            int startIndex = (this.GetCurrectPage() - 1) * 10;
+            int endIndex = (this.GetCurrectPage()) * 10;
+            // foreach( DataRow dr in dt.Rows)
+            if (endIndex > dt.Rows.Count)
+                endIndex = dt.Rows.Count;
+
+            for (var i = startIndex; i < endIndex; i++)
+            {
+
+                DataRow dr = dt.Rows[i];
+                var drNew = dtPaged.NewRow();
+                foreach (DataColumn dc in dt.Columns)
+                {
+                    drNew[dc.ColumnName] = dr[dc];
+                }
+
+                dtPaged.Rows.Add(drNew);
+            }
+            return dtPaged;
+        }
         protected void gvAccountList_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             var row = e.Row;
             if (row.RowType == DataControlRowType.DataRow)
             {
                 Label lbl = row.FindControl("lbl") as Label;
-                //Literal ltl = row.FindControl("ltlActType") as Literal;
                 var dr = row.DataItem as DataRowView;
                 int actType = dr.Row.Field<int>("ActType");
 
                 if (actType == 0)
                 {
-                   // ltl.Text = "支出";
                     lbl.Text = "支出";
                 }
                     
                 else
                 {
-                 //   ltl.Text = "收入";
                     lbl.Text = "收入";
                 }
 

@@ -7,74 +7,83 @@
 // </自動生成>
 //------------------------------------------------------------------------------
 
-namespace AccountingNote.SystemAdmin
+namespace AccountingNote.UserControl
 {
 
 
-    public partial class AccountingList
+    public partial class UcPager
     {
 
         /// <summary>
-        /// form1 コントロール。
+        /// alinkFirst コントロール。
         /// </summary>
         /// <remarks>
         /// 自動生成されたフィールド。
         /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor alinkFirst;
 
         /// <summary>
-        /// btnAdd コントロール。
+        /// alink1 コントロール。
         /// </summary>
         /// <remarks>
         /// 自動生成されたフィールド。
         /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAdd;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor alink1;
 
         /// <summary>
-        /// lblAmount コントロール。
+        /// alink2 コントロール。
         /// </summary>
         /// <remarks>
         /// 自動生成されたフィールド。
         /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAmount;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor alink2;
 
         /// <summary>
-        /// gvAccountList コントロール。
+        /// ltlCurrentPage コントロール。
         /// </summary>
         /// <remarks>
         /// 自動生成されたフィールド。
         /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvAccountList;
+        protected global::System.Web.UI.WebControls.Literal ltlCurrentPage;
 
         /// <summary>
-        /// ltPage コントロール。
+        /// alink4 コントロール。
         /// </summary>
         /// <remarks>
         /// 自動生成されたフィールド。
         /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltPage;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor alink4;
 
         /// <summary>
-        /// UcPager コントロール。
+        /// alink5 コントロール。
         /// </summary>
         /// <remarks>
         /// 自動生成されたフィールド。
         /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
         /// </remarks>
-        protected global::AccountingNote.UserControl.UcPager UcPager;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor alink5;
 
         /// <summary>
-        /// plcNoData コントロール。
+        /// alinkLast コントロール。
         /// </summary>
         /// <remarks>
         /// 自動生成されたフィールド。
         /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plcNoData;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor alinkLast;
+
+        /// <summary>
+        /// ltPager コントロール。
+        /// </summary>
+        /// <remarks>
+        /// 自動生成されたフィールド。
+        /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltPager;
     }
 }

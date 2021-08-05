@@ -1,5 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AccountingList.aspx.cs" Inherits="AccountingNote.SystemAdmin.AccountingList" %>
 
+<%@ Register Src="~/UserControl/UcPager.ascx" TagPrefix="uc1" TagName="UcPager" %>
+
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -12,24 +15,25 @@
     <form id="form1" runat="server">
         <table>
             <tr>
-                <td>
                 <td colspan="2">
                     <h1>流水帳管理系統-後台</h1>
                 </td>
             </tr>
             <tr>
-                <td>
+                <td valign ="Top">
+                     <div style="height: 78px; width: 105px"></div>
                     <a href="UserInfo.aspx">使用者資訊</a><br />
                     <a href="AccountingList.aspx">流水帳管理</a><br />
                     <a href="UserList.aspx">會員管理</a>
                 </td>
                 <td>
-                    <div>
+                    <div style="height: 76px; width: 506px">
                     <h3>流水帳管理</h3>
-                    <asp:Button ID="btnAdd" runat="server" Text="AddAccounting" OnClick="btnAdd_Click" />
+                    <asp:Button ID="btnAdd" runat="server" Text="AddAccounting" OnClick="btnAdd_Click" />&nbsp;&nbsp;&nbsp;
                     <asp:Label ID="lblAmount" runat="server" Text="Label"></asp:Label>
                         </div> 
-                    <asp:GridView ID="gvAccountList" runat="server" AutoGenerateColumns="False" OnRowDataBound ="gvAccountList_RowDataBound" >
+                    <asp:GridView ID="gvAccountList" runat="server" AutoGenerateColumns="False" OnRowDataBound ="gvAccountList_RowDataBound" CellPadding="4" ForeColor="#333333" GridLines="None" >
+                        <AlternatingRowStyle BackColor="White" />
                         <Columns>
 
                             <asp:BoundField DataField="Caption" HeaderText="標題" />
@@ -53,13 +57,26 @@
                             </asp:TemplateField>
 
                         </Columns>
+                        <EditRowStyle BackColor="#2461BF" />
+                        <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                        <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                        <RowStyle BackColor="#EFF3FB" />
+                        <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                        <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                        <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                        <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                        <SortedDescendingHeaderStyle BackColor="#4870BE" />
                     </asp:GridView>
+                    <asp:Literal runat="server" ID="ltPage">
+                    </asp:Literal> 
+                    <uc1:UcPager runat="server" id="UcPager" PageSize="10" Url="/SystemAdmin/AccountingList.aspx"></uc1:UcPager>
                     <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
                         <p style="color:red">
                             No Data
                         </p>
                     </asp:PlaceHolder>
-                    
+
                 </td>
             </tr>
         </table>

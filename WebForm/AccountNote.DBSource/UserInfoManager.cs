@@ -11,8 +11,12 @@ namespace AccountNote.DBSource
 {
     public class UserInfoManager
     {
-        //,[UserLevel],[CreateDate]
 
+        /// <summary>
+        /// 依帳號取得使用者的資訊
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
         public static DataRow GETUserInfoAccount(string account)
         {
             string connectionString = DBhelper.GetConnectionString();
@@ -34,6 +38,12 @@ namespace AccountNote.DBSource
                 return null;
             }
         }
+
+        /// <summary>
+        /// 依ID取得使用者資訊
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         public static DataRow GETUserInfoData(string ID)
         {
             string connectionString = DBhelper.GetConnectionString();
@@ -55,6 +65,10 @@ namespace AccountNote.DBSource
                 return null;
             }
         }
+        /// <summary>
+        /// 取得密碼以外的所有使用者資訊
+        /// </summary>
+        /// <returns></returns>
         public static DataTable GetUserList()
         {
             string connStr = DBhelper.GetConnectionString();
@@ -93,7 +107,10 @@ namespace AccountNote.DBSource
                 return null;
             }
         }
-
+        /// <summary>
+        /// 取得總共有多少使用者
+        /// </summary>
+        /// <returns></returns>
         public static DataRow GetUserCount()
         {
             string connStr = DBhelper.GetConnectionString();
@@ -140,6 +157,11 @@ namespace AccountNote.DBSource
                 return false;
             }
         }
+        /// <summary>
+        /// 判斷此帳號是否已經被使用
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
         public static bool IsAccountCreated(string account)
         {
             string connStr = DBhelper.GetConnectionString();
@@ -165,6 +187,13 @@ namespace AccountNote.DBSource
                 return false;
             }
         }
+        /// <summary>
+        /// 建立使用者
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
+        /// <param name="actType"></param>
         public static void CreateUser(string account, string name, string email, int actType)
         {
             string connectionString = DBhelper.GetConnectionString();
@@ -201,6 +230,10 @@ namespace AccountNote.DBSource
                 Logger.WriteLog(ex);
             }
         }
+        /// <summary>
+        /// 刪除使用者
+        /// </summary>
+        /// <param name="id"></param>
         public static void DeleteUser(string id)
         {
 
@@ -225,6 +258,13 @@ namespace AccountNote.DBSource
 
             }
         }
+        /// <summary>
+        /// 變更使用者資訊
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public static bool UpateUser(string id, string name, string email)
         {
 
@@ -256,6 +296,12 @@ namespace AccountNote.DBSource
                 return false;
             }
         }
+        /// <summary>
+        /// 更變使用者密碼
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pwd"></param>
+        /// <returns></returns>
         public static bool UpatePassword(string id, string pwd)
         {
 
@@ -285,6 +331,10 @@ namespace AccountNote.DBSource
                 return false;
             }
         }
+        /// <summary>
+        /// 建立新使用者的GUID
+        /// </summary>
+        /// <returns></returns>
         public static string GetUserInfoID()
         {
             string connStr = DBhelper.GetConnectionString();

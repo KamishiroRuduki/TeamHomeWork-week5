@@ -13,7 +13,11 @@ namespace AccountNote.DBSource
     public class AccountingManager
     {
 
-
+        /// <summary>
+        /// 查詢流水帳清單
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public static DataTable GetAccountingList(string userID)
         {
             string connStr = DBhelper.GetConnectionString();
@@ -39,8 +43,12 @@ namespace AccountNote.DBSource
                 return null;
             }
         }
-
-
+        /// <summary>
+        /// 查詢流水帳
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public static DataRow GetAccounting(int id, string userID)
         {
             string connStr = DBhelper.GetConnectionString();
@@ -69,7 +77,14 @@ namespace AccountNote.DBSource
             }
         }
 
-
+        /// <summary>
+        /// 建立流水帳
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="caption"></param>
+        /// <param name="amount"></param>
+        /// <param name="actType"></param>
+        /// <param name="body"></param>
         public static void CreateAccounting(string userID, string caption, int amount, int actType, string body)
         {
             if (amount < 0 || amount > 1000000)
@@ -111,7 +126,16 @@ namespace AccountNote.DBSource
                 Logger.WriteLog(ex);
             }
         }
-
+        /// <summary>
+        /// 變更流水帳
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userID"></param>
+        /// <param name="caption"></param>
+        /// <param name="amount"></param>
+        /// <param name="actType"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
         public static bool UpateAccount(int id, string userID, string caption, int amount, int actType, string body)
         {
             if (amount < 0 || amount > 1000000)
@@ -156,7 +180,10 @@ namespace AccountNote.DBSource
                 return false;
             }
         }
-
+        /// <summary>
+        /// 刪除流水帳
+        /// </summary>
+        /// <param name="id"></param>
         public static void DeleteAccount(int id)
         {
 
@@ -209,6 +236,10 @@ namespace AccountNote.DBSource
 
             }
         }
+        /// <summary>
+        /// 取得第一筆和後一筆流水帳建立的時間、總筆數
+        /// </summary>
+        /// <returns></returns>
         public static DataRow GetDateAndCount()
         {
             string connStr = DBhelper.GetConnectionString();
@@ -230,6 +261,12 @@ namespace AccountNote.DBSource
                 return null;
             }
         }
+        /// <summary>
+        /// 取得收入或支出的加總
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="actType"></param>
+        /// <returns></returns>
         public static DataRow GetAmount(string userid, int actType)
         {
             string connStr = DBhelper.GetConnectionString();

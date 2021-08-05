@@ -8,14 +8,28 @@ namespace AccountNote.DBSource
 {
     public class Logger
     {
+        /// <summary>
+        /// 建立錯誤訊息的log
+        /// </summary>
+        /// <param name="ex"></param>
         public static void WriteLog(Exception ex)
         {
             string msg =
                 $@" {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}
                     {ex.ToString()}
+
                 ";
 
-            System.IO.File.AppendAllText("C:\\Users\\p4786\\C sharp\\TeamHomeWork-week5\\WebForm\\Log.log", msg);
+            string logPath = "D:\\Logs\\Log.log";
+            string folderPath = System.IO.Path.GetDirectoryName(logPath);
+
+            if (!System.IO.Directory.Exists(folderPath))
+                System.IO.Directory.CreateDirectory(folderPath);
+
+            if (!System.IO.File.Exists(logPath))
+                System.IO.File.Create(logPath);
+
+            System.IO.File.AppendAllText(logPath, msg);
 
             throw ex;
         }

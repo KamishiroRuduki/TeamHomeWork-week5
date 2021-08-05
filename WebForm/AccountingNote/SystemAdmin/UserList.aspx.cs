@@ -53,9 +53,12 @@ namespace AccountingNote.SystemAdmin
                 var dt = UserInfoManager.GetUserList();
                 if (dt.Rows.Count > 0)
                 {
-                    this.gvUserList.DataSource = dt;
+                var dtPaged = this.GetPageDataTable(dt);
+                this.gvUserList.DataSource = dtPaged;
                     this.gvUserList.DataBind();
-                }
+                this.UcPager.TotalSize = dt.Rows.Count;
+                this.UcPager.Bind();
+            }
                 else
                 {
                     this.gvUserList.Visible = false;
@@ -64,6 +67,44 @@ namespace AccountingNote.SystemAdmin
                 }
           //  }
 
+        }
+        private int GetCurrectPage()
+        {
+            string pageText = Request.QueryString["Page"];
+            if (string.IsNullOrWhiteSpace(pageText))
+                return 1;
+            int intPage;
+            if (!int.TryParse(pageText, out intPage))
+                return 1;
+            if (intPage <= 0)
+                return 1;
+            return intPage;
+        }
+
+        private DataTable GetPageDataTable(DataTable dt)
+        {
+            //  DataTable dtPaged = (dt.Rows.Count==0)?dt.Clone() : dt.Copy();
+            DataTable dtPaged = dt.Clone();
+
+            int startIndex = (this.GetCurrectPage() - 1) * 10;
+            int endIndex = (this.GetCurrectPage()) * 10;
+            // foreach( DataRow dr in dt.Rows)
+            if (endIndex > dt.Rows.Count)
+                endIndex = dt.Rows.Count;
+
+            for (var i = startIndex; i < endIndex; i++)
+            {
+
+                DataRow dr = dt.Rows[i];
+                var drNew = dtPaged.NewRow();
+                foreach (DataColumn dc in dt.Columns)
+                {
+                    drNew[dc.ColumnName] = dr[dc];
+                }
+
+                dtPaged.Rows.Add(drNew);
+            }
+            return dtPaged;
         }
         protected void btnAdd_Click(object sender, EventArgs e)
         {

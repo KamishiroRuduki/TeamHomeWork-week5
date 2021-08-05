@@ -14,12 +14,12 @@
             <tr>
                 <td colspan="2" width="500" height="150" valign="top">
                     <h1 id="title">流水帳管理系統</h1>
-                    <a href="Login.aspx">登入系統</a>
+                    <a href="Login.aspx" style="background-color:bisque">登入系統</a>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <table align="left" style="font-size:20px"width="500">
+                    <table table frame="void" border rules="rows" cellspacing=0 align="left" style="font-size:20px"width="500">
                         <tr align="left">
                             <th>初次記帳</th>
                             <td>

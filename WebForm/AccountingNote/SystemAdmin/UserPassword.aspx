@@ -9,7 +9,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <table>
+        <table frame="void">
             <tr>
                 <td colspan="2">
                     <h1>流水帳管理系統-後台</h1>
