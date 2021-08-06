@@ -74,7 +74,8 @@ namespace AccountNote.DBSource
             string connStr = DBhelper.GetConnectionString();
             string dbCommand =
                 @"SELECT  [ID] ,[Account],[Name] ,[Email],[UserLevel],[CreateDate]
-                   FROM UserInfo ";
+                   FROM UserInfo 
+                    ORDER BY CreateDate DESC";
 
             List<SqlParameter> list = new List<SqlParameter>();
             try
@@ -331,6 +332,7 @@ namespace AccountNote.DBSource
                 return false;
             }
         }
+
         /// <summary>
         /// 建立新使用者的GUID
         /// </summary>

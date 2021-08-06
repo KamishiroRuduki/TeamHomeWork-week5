@@ -71,17 +71,18 @@ namespace AccountingNote.SystemAdmin
                 return;
             }
 
-
+            string idtext = this.Request.QueryString["ID"];
+            DataRow dr = UserInfoManager.GETUserInfoData(idtext);
             string accountText = currentUser.Account;
             string userID = currentUser.ID;
-            string pwd = currentUser.PWD;
+            string pwd = dr["PWD"].ToString();
             orgpwd = this.txtPWD.Text;
             cpwd = this.txtCurretPWD.Text;
             NewPwd = this.txtNewPWD.Text;
 
 
 
-            string idtext = this.Request.QueryString["ID"];
+            
             if ( string.Compare(orgpwd, cpwd) == 0)
             {
                 if( string.Compare(orgpwd, pwd) != 0 || string.Compare(cpwd, pwd) != 0)
@@ -94,9 +95,18 @@ namespace AccountingNote.SystemAdmin
                     this.btnChange.Visible = false;
                     this.btnNo.Visible = true;
                     this.btnYes.Visible = true;
+                    this.txtCurretPWD.Visible = false;
+                    this.txtPWD.Visible = false;
+                    this.txtNewPWD.Visible = false;
+                    this.lblAccount.Visible = false;
+                    this.Label1.Visible = false;
+                    this.Label2.Visible = false;
+                    this.Label3.Visible = false;
+                    this.Label4.Visible = false;
                     this.txtPWD.Text = orgpwd;
                     this.txtCurretPWD.Text = cpwd;
                     this.txtNewPWD.Text = NewPwd;
+                    this.ltMsg.Text = "是否確認變更密碼";
                 }
 
             }
@@ -138,6 +148,10 @@ namespace AccountingNote.SystemAdmin
                 msgList.Add("新密碼不能為空");
             }
 
+            if(this.txtNewPWD.Text.Length<8 || this.txtNewPWD.Text.Length > 16)
+            {
+                msgList.Add("新密碼長度不能小於8或大於16");
+            }
             errorMsgList = msgList;
             if (msgList.Count == 0)
                 return true;

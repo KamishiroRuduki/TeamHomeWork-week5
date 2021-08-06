@@ -48,6 +48,8 @@ namespace AccountingNote.SystemAdmin
                     this.ddlActType.Visible = true;
                     this.lblDate.Visible = false;
                     this.lblLevel.Visible = false;
+                    this.Label1.Visible = false;
+                    this.Label2.Visible = false;
 
                 }
             }

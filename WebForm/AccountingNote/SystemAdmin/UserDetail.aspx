@@ -37,8 +37,8 @@
                     <%--<asp:TextBox ID="txtAccount" runat="server" Enabled="False"></asp:TextBox>--%>
                     姓名:<asp:TextBox ID="txtName" runat="server"></asp:TextBox><br/>
                     Email:<asp:TextBox ID="txtMail" TextMode="Email" runat="server"></asp:TextBox><br/>
-                    等級:<asp:Label ID="lblLevel" runat="server"></asp:Label><br />
-                    建立日期<asp:Label ID="lblDate" runat="server"></asp:Label><br />
+                    <asp:Label ID="Label1" runat="server" Text="等級:"></asp:Label><asp:Label ID="lblLevel" runat="server"></asp:Label><br />
+                    <asp:Label ID="Label2" runat="server" Text="建立日期:"></asp:Label><asp:Label ID="lblDate" runat="server"></asp:Label><br />
                     <asp:Button ID="btnSave" runat="server" Text="save" OnClick="btnSave_Click" />&nbsp;
                     <asp:Button ID="btnDel" runat="server" Text="Delete" OnClick="btnDel_Click" Visible="False" />&nbsp;&nbsp;
                     <asp:Button ID="btnPwd" align="right top" runat="server"  Text="前往變更密碼" OnClick="btnPwd_Click" Visible="False" /><br/>

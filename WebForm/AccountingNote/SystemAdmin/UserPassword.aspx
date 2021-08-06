@@ -23,11 +23,11 @@
                 </td>
                 <td class="auto-style1">
                     <h3>會員管理</h3>
-                    帳號:<asp:Label ID="lblAccount" runat="server"></asp:Label><br/>
+                    <asp:Label ID="Label4" runat="server" Text="帳號:"></asp:Label><asp:Label ID="lblAccount" runat="server"></asp:Label><br/>
                     <%--<asp:TextBox ID="txtAccount" runat="server" Enabled="False"></asp:TextBox>--%>
-                    原密碼:<asp:TextBox ID="txtPWD" TextMode="Password" runat="server"></asp:TextBox><br/>
-                    確認密碼:<asp:TextBox ID="txtCurretPWD" TextMode="Password" runat="server"></asp:TextBox><br/><br/>
-                    新密碼:<asp:TextBox ID="txtNewPWD" TextMode="Password" runat="server"></asp:TextBox><br/>
+                    <asp:Label ID="Label1" runat="server" Text="原密碼:"></asp:Label>&nbsp&nbsp&nbsp<asp:TextBox ID="txtPWD" TextMode="Password" runat="server"></asp:TextBox><br/>
+                    <asp:Label ID="Label2" runat="server" Text="確認密碼:"></asp:Label><asp:TextBox ID="txtCurretPWD" TextMode="Password" runat="server"></asp:TextBox><br/><br/>
+                    <asp:Label ID="Label3" runat="server" Text="新密碼:"></asp:Label>&nbsp&nbsp&nbsp<asp:TextBox ID="txtNewPWD" TextMode="Password" runat="server"></asp:TextBox><br/>
                     <asp:Button ID="btnChange" runat="server" Text="變更密碼" OnClick="btnChange_Click" Visible="true" />&nbsp;
                     <asp:Button ID="btnYes" runat="server" Text="確認" OnClick="btnYes_Click" Visible="False" />&nbsp;
                     <asp:Button ID="btnNo" runat="server" Text="取消" OnClick="btnNo_Click" Visible="False" />
